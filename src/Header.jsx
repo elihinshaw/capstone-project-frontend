@@ -1,9 +1,9 @@
 export function Header() {
   return (
     <header>
-      <nav>
+      {/* <nav>
         <a href="#">Home</a> | <a href="#">Link</a>
-      </nav>
+      </nav> */}
     </header>
   );
 }

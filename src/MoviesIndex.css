@@ -1,0 +1,25 @@
+#movies-index {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+}
+
+.card {
+  object-fit: contain;
+  margin-bottom: auto;
+}
+
+.movie-card {
+  background-color: #2e3237;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 275px;
+  margin: 12px;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+}

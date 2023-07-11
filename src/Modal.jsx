@@ -6,33 +6,44 @@ export const Modal = ({ movie, closeModal }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const checkFavoriteStatus = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/favorites?movie_id=${movie.id}`
-        );
-        setIsFavorite(response.data.length > 0);
-      } catch (error) {
-        console.error("Error checking favorite status:", error);
-      }
+    const checkFavoriteStatus = () => {
+      axios
+        .get(`http://localhost:3000/favorites/${movie.id}.json`)
+        .then((response) => {
+          setIsFavorite(response.status === 200 && response.data);
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            setIsFavorite(false);
+          } else {
+            console.error("Error checking favorite status:", error);
+          }
+        });
     };
 
     checkFavoriteStatus();
   }, [movie.id]);
 
-  const handleFavoriteClick = async () => {
-    try {
-      if (isFavorite) {
-        await axios.delete(`http://localhost:3000/favorites/${movie.id}`);
-        setIsFavorite(false);
-      } else {
-        await axios.post("http://localhost:3000/favorites", {
-          movie_id: movie.id,
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      axios
+        .delete(`http://localhost:3000/favorites/${movie.id}.json`)
+        .then(() => {
+          setIsFavorite(false);
+        })
+        .catch((error) => {
+          console.error("Error removing from favorites:", error);
         });
-        setIsFavorite(true);
-      }
-    } catch (error) {
-      console.error("Error updating favorites:", error);
+    } else {
+      // Add to favorites
+      axios
+        .post("http://localhost:3000/favorites.json", { movie_id: movie.id })
+        .then(() => {
+          setIsFavorite(true);
+        })
+        .catch((error) => {
+          console.error("Error adding to favorites:", error);
+        });
     }
   };
 

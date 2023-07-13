@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MoviesIndex } from "./MoviesIndex";
+import { MoviesShow } from "./MoviesShow";
 import { Modal } from "./Modal";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
@@ -9,8 +10,8 @@ import { Routes, Route } from "react-router-dom";
 
 export function Content() {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMoviesShowVisible, setIsMoviesShowVisible] = useState(false);
+  const [currentMovie, setCurrentMovie] = useState({});
 
   useEffect(() => {
     axios
@@ -23,13 +24,14 @@ export function Content() {
       });
   }, []);
 
-  const openModal = (movie) => {
-    setSelectedMovie(movie);
-    setIsModalOpen(true);
+  const handleShowMovie = (movie) => {
+    console.log("handleShowMovie", movie);
+    setIsMoviesShowVisible(true);
+    setCurrentMovie(movie);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleClose = () => {
+    setIsMoviesShowVisible(false);
   };
 
   return (
@@ -38,12 +40,15 @@ export function Content() {
       <Routes>
         <Route
           path="/"
-          element={<MoviesIndex movies={movies} openModal={openModal} />}
+          element={
+            <MoviesIndex movies={movies} onShowMovie={handleShowMovie} />
+          }
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      {isModalOpen && <Modal movie={selectedMovie} closeModal={closeModal} />}
+      <MoviesShow movie={currentMovie} />
+      <Modal show={isMoviesShowVisible} onClose={handleClose} />
     </div>
   );
 }

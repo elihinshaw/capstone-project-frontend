@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./Logout.css";
+// import "./Logout.css";
 
 export function LogoutLink() {
   const handleClick = (event) => {

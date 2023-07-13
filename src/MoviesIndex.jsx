@@ -1,26 +1,21 @@
-import "./MoviesIndex.css";
+export function MoviesIndex(props) {
+  const baseImageUrl = "https://image.tmdb.org/t/p/original";
 
-export function MoviesIndex({ movies, openModal }) {
   return (
     <div id="movies-index">
-      {movies.map((movie) => (
-        <div
-          key={movie.id}
-          className="movie-card"
-          onClick={() => openModal(movie)}
-        >
+      {props.movies.map((movie) => (
+        <div key={movie.id} className="movie-card">
           <div className="card">
-            <img className="card-img-top" src={movie.image} alt={movie.name} />
+            <img
+              className="card-img-top"
+              src={baseImageUrl + movie.poster_path}
+              alt={movie.title}
+            />
             <div className="card-body">
-              <p className="card-text">{movie.description}</p>
+              <p className="card-text">{movie.overview}</p>
             </div>
           </div>
-          <button
-            className="btn btn-primary see-more-button"
-            onClick={() => openModal(movie)}
-          >
-            More
-          </button>
+          <button onClick={() => props.onShowMovie(props)}>More info</button>
         </div>
       ))}
     </div>

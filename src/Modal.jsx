@@ -4,8 +4,8 @@ import "./Modal.css";
 export function Modal(props) {
   if (props.show) {
     return (
-      <div className="modal-background" onClick={props.onClose}>
-        <div className="modal-dialog modal-lg modal-bordered">
+      <div className="modal-background " onClick={props.onClose}>
+        <div className="modal-dialog modal-lg modal-bordered position-relative">
           <div className="modal-content">
             <div className="modal-header">
               <br />

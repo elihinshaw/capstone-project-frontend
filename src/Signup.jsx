@@ -7,13 +7,25 @@ export function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setErrors([]);
-    const params = new FormData(event.target);
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
     axios
-      .post("http://localhost:3000/users.json", params)
+      .post("http://localhost:3000/users.json", formData)
       .then((response) => {
         console.log(response.data);
         event.target.reset();
-        window.location.href = "/login";
+
+        axios
+          .post("http://localhost:3000/sessions.json", { email, password })
+          .then((response) => {
+            window.location.href = "/";
+          })
+          .catch((error) => {
+            console.log(error.response.data.errors);
+            setErrors(["Invalid email or password"]);
+          });
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -24,11 +36,13 @@ export function Signup() {
   return (
     <div id="signup">
       <h1>Signup</h1>
-      <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-      </ul>
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((error, index) => (
+            <li key={index}>{error}</li>
+          ))}
+        </ul>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           Name: <input name="name" type="text" />

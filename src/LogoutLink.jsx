@@ -10,12 +10,7 @@ export function LogoutLink() {
   };
 
   return (
-    <a
-      href="/"
-      onClick={handleClick}
-      style={{ color: "white" }}
-      className="nav-link"
-    >
+    <a href="/" onClick={handleClick} className="nav-link text-light">
       Logout
     </a>
   );

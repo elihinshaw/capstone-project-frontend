@@ -5,3 +5,10 @@
 .nav-link{
   color:white
 }
+
+.nav-link,
+.navbar-brand,
+.form-control,
+button {
+  line-height: 1;
+}

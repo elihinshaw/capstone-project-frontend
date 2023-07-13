@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { MoviesIndex } from "./MoviesIndex";
-import { MoviesShow } from "./MoviesShow";
 import { Modal } from "./Modal";
+import { MoviesShow } from "./MoviesShow";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
-import { LogoutLink } from "./LogoutLink";
+
 import { Routes, Route } from "react-router-dom";
 
 export function Content() {
@@ -36,19 +36,21 @@ export function Content() {
 
   return (
     <div className="container">
-      <LogoutLink />
       <Routes>
         <Route
           path="/"
           element={
-            <MoviesIndex movies={movies} onShowMovie={handleShowMovie} />
+            <>
+              <MoviesIndex movies={movies} onShowMovie={handleShowMovie} />
+              <Modal show={isMoviesShowVisible} onClose={handleClose}>
+                <MoviesShow currentMovie={currentMovie} />
+              </Modal>
+            </>
           }
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-      <MoviesShow movie={currentMovie} />
-      <Modal show={isMoviesShowVisible} onClose={handleClose} />
     </div>
   );
 }

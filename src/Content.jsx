@@ -25,7 +25,6 @@ export function Content() {
   }, []);
 
   const handleShowMovie = (movie) => {
-    console.log("handleShowMovie", movie);
     setIsMoviesShowVisible(true);
     setCurrentMovie(movie);
   };

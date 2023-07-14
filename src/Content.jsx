@@ -6,8 +6,8 @@ import { MoviesShow } from "./MoviesShow";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { FavoritesIndex } from "./FavoritesIndex";
-
 import { Routes, Route } from "react-router-dom";
+
 const token = localStorage.getItem("jwt");
 
 export function Content() {

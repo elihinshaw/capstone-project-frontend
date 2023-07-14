@@ -21,8 +21,6 @@ export const MoviesShow = (props) => {
             console.error("Error checking favorite status:", error);
           }
         }
-        console.log(!!localStorage.getItem("jwt"));
-        console.log(localStorage.getItem("jwt"));
       };
 
       checkFavoriteStatus();

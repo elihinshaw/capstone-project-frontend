@@ -57,7 +57,12 @@ export function Content() {
           path="/"
           element={
             <>
-              <MoviesIndex movies={movies} onShowMovie={handleShowMovie} />
+              <MoviesIndex
+                movies={movies}
+                setMovies={setMovies}
+                onShowMovie={handleShowMovie}
+              />
+
               <Modal show={isMoviesShowVisible} onClose={handleClose}>
                 <MoviesShow currentMovie={currentMovie} />
               </Modal>

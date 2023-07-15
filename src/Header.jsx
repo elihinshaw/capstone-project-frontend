@@ -12,7 +12,7 @@ export function Header() {
           <Link to="/" className="navbar-brand text-light">
             The Movie Index
           </Link>
-          <button
+          <a
             className="navbar-toggler bg-light"
             type="button"
             data-bs-toggle="collapse"
@@ -22,7 +22,7 @@ export function Header() {
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
-          </button>
+          </a>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto">

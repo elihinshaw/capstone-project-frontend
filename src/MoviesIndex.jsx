@@ -1,9 +1,27 @@
+import { useState, useEffect } from "react";
+
 export function MoviesIndex(props) {
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
+  const [pageNumber, setPageNumber] = useState(1);
 
   const handleShowMovie = (movie) => {
     props.onShowMovie(movie);
   };
+
+  const handleNextPage = () => {
+    setPageNumber(pageNumber + 1);
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/movies?page=${pageNumber}`)
+      .then((response) => response.json())
+      .then((data) => {
+        props.setMovies(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [pageNumber, props.setMovies]);
 
   return (
     <div id="movies-index" className="row">
@@ -20,6 +38,13 @@ export function MoviesIndex(props) {
           <br />
         </div>
       ))}
+      <div className="row mt-3">
+        <div className="col text-center mb-5">
+          <button className="btn btn-light bm-4" onClick={handleNextPage}>
+            Next Page
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

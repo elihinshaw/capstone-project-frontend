@@ -5,6 +5,7 @@ export const MoviesShow = (props) => {
   const baseImageUrl = "https://image.tmdb.org/t/p/original";
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   if (!!localStorage.getItem("jwt") === true) {
     useEffect(() => {
@@ -17,8 +18,6 @@ export const MoviesShow = (props) => {
         } catch (error) {
           if (error.response && error.response.status === 404) {
             setIsFavorite(false);
-          } else {
-            console.error("Error checking favorite status:", error);
           }
         }
       };
@@ -46,21 +45,28 @@ export const MoviesShow = (props) => {
       .post("http://localhost:3000/favorites.json", {
         movie_id: props.currentMovie.id,
       })
-      .then(() => {
-        setIsFavorite(true);
+      .then((response) => {
+        if (response.status === 201) {
+          setIsFavorite(true);
+        }
       })
-      .catch((error) => {
-        console.error("Error adding to favorites:", error);
+      .catch(() => {
+        setErrorMessage(
+          "You may only favorite up to 40 movies as of this moment.\nSorry for the inconvenience."
+        );
       });
   };
+
   const removeFromFavorites = () => {
     axios
       .delete(`http://localhost:3000/favorites/${props.currentMovie.id}.json`)
       .then(() => {
         setIsFavorite(false);
       })
-      .catch((error) => {
-        console.error("Error removing from favorites:", error);
+      .catch(() => {
+        setErrorMessage(
+          "An error occurred while removing from favorites. Please try again."
+        );
       });
   };
 
@@ -69,6 +75,11 @@ export const MoviesShow = (props) => {
     if (event.target.classList.contains("btn-close")) {
       setShowAlert(false);
     }
+  };
+
+  const closeErrorMessage = (event) => {
+    event.stopPropagation();
+    setErrorMessage(null);
   };
 
   return (
@@ -110,6 +121,18 @@ export const MoviesShow = (props) => {
             ></button>
           </div>
         )}
+
+        {errorMessage && (
+          <div className="alert alert-primary d-flex justify-content-center position-fixed top-50 start-50 translate-middle">
+            <span>{errorMessage}</span>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={closeErrorMessage}
+            ></button>
+          </div>
+        )}
+
         <div></div>
       </div>
     </div>

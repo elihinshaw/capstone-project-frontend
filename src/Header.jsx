@@ -7,12 +7,12 @@ export function Header() {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg navbar-light bg-gray">
+      <nav className="navbar navbar-expand-lg navbar-light bg-gray ">
         <div className="container">
-          <Link to="/" className="navbar-brand text-light">
+          <Link to="/" className="navbar-brand text-light ">
             The Movie Index
           </Link>
-          <a
+          <button
             className="navbar-toggler bg-light"
             type="button"
             data-bs-toggle="collapse"
@@ -22,15 +22,16 @@ export function Header() {
             aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
-          </a>
-
+          </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item active">
-                <Link to="/" className="nav-link text-light">
-                  Movies
-                </Link>
-              </li>
+              <div className="d-flex flex-grow-1">
+                <li className="nav-item">
+                  <a href="/" className="nav-link text-light">
+                    Movies
+                  </a>
+                </li>
+              </div>
               {isLoggedIn ? (
                 <>
                   <li className="nav-item">
@@ -60,7 +61,6 @@ export function Header() {
           </div>
         </div>
       </nav>
-      <br />
     </header>
   );
 }

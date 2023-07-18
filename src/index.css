@@ -7,3 +7,8 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+#search {
+ z-index: 0 
+}
+

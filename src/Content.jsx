@@ -6,7 +6,8 @@ import { MoviesShow } from "./MoviesShow";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { FavoritesIndex } from "./FavoritesIndex";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Search } from "./Search";
 
 const token = localStorage.getItem("jwt");
 
@@ -15,6 +16,7 @@ export function Content() {
   const [favorites, setFavorites] = useState([]);
   const [isMoviesShowVisible, setIsMoviesShowVisible] = useState(false);
   const [currentMovie, setCurrentMovie] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -50,6 +52,14 @@ export function Content() {
     setIsMoviesShowVisible(false);
   };
 
+  const handleSearch = (searchFilter) => {
+    const filteredMovies = movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchFilter.toLowerCase())
+    );
+    setMovies(filteredMovies);
+    navigate("/");
+  };
+
   return (
     <div className="container">
       <Routes>
@@ -58,6 +68,7 @@ export function Content() {
           element={
             <>
               <MoviesIndex
+                onSearch={handleSearch}
                 movies={movies}
                 setMovies={setMovies}
                 onShowMovie={handleShowMovie}

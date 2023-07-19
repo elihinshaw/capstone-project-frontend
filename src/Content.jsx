@@ -7,7 +7,6 @@ import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { FavoritesIndex } from "./FavoritesIndex";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { Search } from "./Search";
 
 const token = localStorage.getItem("jwt");
 
@@ -29,7 +28,7 @@ export function Content() {
       });
   }, []);
 
-  if (!!localStorage.getItem("jwt") === true) {
+  if (!!localStorage.getItem("jwt")) {
     useEffect(() => {
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       axios

@@ -7,7 +7,7 @@ export const MoviesShow = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  if (!!localStorage.getItem("jwt") === true) {
+  if (!!localStorage.getItem("jwt")) {
     useEffect(() => {
       const checkFavoriteStatus = async () => {
         try {
@@ -32,7 +32,7 @@ export const MoviesShow = (props) => {
     if (isFavorite) {
       removeFromFavorites();
     } else {
-      if (!!localStorage.getItem("jwt") === true) {
+      if (!!localStorage.getItem("jwt")) {
         addToFavorites();
       } else {
         setShowAlert(true);
@@ -95,6 +95,7 @@ export const MoviesShow = (props) => {
           />
           <br />
           <p>{props.currentMovie.overview}</p>
+          {/* <p>{props.currentMovie.genres.join(" | ")}</p> */}
         </div>
         <button onClick={toggleFavorite}>
           {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
